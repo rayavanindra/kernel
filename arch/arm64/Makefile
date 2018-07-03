@@ -113,26 +113,16 @@ endif
 
 ifeq ($(CONFIG_CPU_BIG_ENDIAN), y)
 KBUILD_CPPFLAGS	+= -mbig-endian
-CHECKFLAGS	+= -D__AARCH64EB__
-AS		+= -EB
-LD		+= -EB
-ifeq ($(ld-name),gold)
-LDFLAGS		+= -maarch64_elf64_be_vec
-else
-LDFLAGS		+= -maarch64linuxb
-endif
-UTS_MACHINE	:= aarch64_be
+CHECKFLAGS	    += -D__AARCH64EB__
+AS		          += -EB
+LDFLAGS	      	+= -EB -maarch64elfb
+UTS_MACHINE	    := aarch64_be
 else
 KBUILD_CPPFLAGS	+= -mlittle-endian
-CHECKFLAGS	+= -D__AARCH64EL__
-AS		+= -EL
-LD		+= -EL
-ifeq ($(ld-name),gold)
-LDFLAGS		+= -maarch64_elf64_le_vec
-else
-LDFLAGS		+= -maarch64linux
-endif
-UTS_MACHINE	:= aarch64
+CHECKFLAGS	    += -D__AARCH64EL__
+AS		          += -EL
+LDFLAGS	      	+= -EL -maarch64elf
+UTS_MACHINE	    := aarch64
 endif
 
 CHECKFLAGS	+= -D__aarch64__ -m64
